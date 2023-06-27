@@ -1,15 +1,18 @@
 
 import React from 'react';
-import { Card, ListGroup, Button} from 'react-bootstrap';
+import { Card, ListGroup, Button, CloseButton} from 'react-bootstrap';
 import { cartElements } from '../Data/CartData';
 import './cart.css';
 
-const Cart = () => {
+const Cart = ({onCartClose}) => {
 
   return (
     <div className='scrollable-container'>
     <Card className="bg-secondary shadow-lg">
-      <Card.Header className='display-5'>Cart</Card.Header>
+      <Card.Header className='display-6 d-flex justify-content-between'>
+        <h1>Cart</h1>
+        <CloseButton onClick={()=>{onCartClose()}}></CloseButton>
+      </Card.Header>
       <ListGroup variant="flush" className='bg-secondary'>
         {cartElements.map((item) => (
           <ListGroup.Item key={item.title}>

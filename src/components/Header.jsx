@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {BiStore} from 'react-icons/bi'
-const Header = () => {
+const Header = ({onCartOpen}) => {
     const noOfItems = 0;
     return <>
         <Navbar bg="dark" data-bs-theme="dark">
@@ -14,7 +14,7 @@ const Header = () => {
             <Nav.Link href="#features">Store</Nav.Link>
             <Nav.Link href="#pricing">About</Nav.Link>
           </Nav>
-          <Button>Cart {noOfItems}</Button>
+          <Button onClick={()=>{onCartOpen()}}>Cart {noOfItems}</Button>
         </Container>
       </Navbar>
     </>
