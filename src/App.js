@@ -19,7 +19,7 @@ function App() {
   }
   return (
     <div className="App d-flex flex-column">
-      <Header onCartOpen={onCartOpen}/>
+      <Header onCartOpen={onCartOpen} cartActive/>
       <Content />
       <Section />
       <Button className='btn-lg mx-auto my-3' onClick={()=>{onCartOpen()}}>See The Cart</Button>

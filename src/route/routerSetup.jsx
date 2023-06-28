@@ -7,6 +7,6 @@ import About from '../pages/About';
     export const Router = createBrowserRouter([
         // {path: '/', element: <App />},
         {path: '/', element: <App />},
-        {path: '/home', element: <div>home page</div>},
+        {path: '/home', element: <Home />},
         {path: '/about', element: <About />},
     ]);

@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import {BiStore} from 'react-icons/bi'
 import CartContext from '../cartContext/CartContext';
 
-const Header = ({onCartOpen}) => {
+const Header = ({onCartOpen, cartActive}) => {
     const cartCtx = useContext(CartContext);
     const noOfItems = cartCtx.noOfCartItems()
 
@@ -19,7 +19,7 @@ const Header = ({onCartOpen}) => {
             <Nav.Link href="/">Store</Nav.Link>
             <Nav.Link href="/about">About</Nav.Link>
           </Nav>
-          <Button onClick={()=>{onCartOpen()}}>Cart {noOfItems}</Button>
+          {cartActive && <Button onClick={()=>{onCartOpen()}}>Cart {noOfItems}</Button>}
         </Container>
       </Navbar>
     </>
