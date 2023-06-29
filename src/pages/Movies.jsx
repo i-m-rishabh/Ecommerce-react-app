@@ -7,14 +7,12 @@ import { ListGroup } from "react-bootstrap";
 
 const Movies = () => {
     const [movies, setMovies] = useState([]);
-    function handleFetchMovie(){
-
-        fetch("https://swapi.dev/api/films").then(
-            (response)=>{
-                return response.json();
-            }
-        ).then((data)=>{
-            const fetchedMovies = data.results.map((movie)=>{
+    async function handleFetchMovie(){
+        try{
+        const response = await fetch("https://swapi.dev/api/films");
+        const data = await response.json();
+ 
+        const fetchedMovies = data.results.map((movie)=>{
                 return {
                     title:movie.title,
                     id:movie.episode_id,
@@ -23,8 +21,11 @@ const Movies = () => {
             })
             // console.log(movies);
             setMovies(fetchedMovies);
-        })
+        }catch(err){
+            console.log(err);
+        }
     }
+
     return <div style={{minHeight:"100vh"}}>
         <Header onCartOpen={()=>{}} cartActive={false}/>
         <Content />
@@ -33,12 +34,12 @@ const Movies = () => {
             <ListGroup className="my-2">
                 {
                     movies.map((movie)=>{
-                        return <>
+                        return <div key={movie.id}>
                         <ListGroup.Item className="">
                         <h3 className="text-center">{movie.title}</h3>
                         <p className="">{movie.desc}</p>
                 </ListGroup.Item>
-                        </>
+                        </div>
                     })
                 }
             </ListGroup>
