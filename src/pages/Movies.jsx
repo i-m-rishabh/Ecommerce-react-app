@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Content from "../components/Content";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -11,6 +11,14 @@ const Movies = () => {
     const [retrying, setRetrying] = useState(false);
     const [retry, setRety] = useState(0);
     useEffect(()=>{
+        const data = localStorage.getItem('data');
+        if(data){
+            setMovies(JSON.parse(data));
+        }else{
+            handleFetchMovie();
+        }
+    },[])
+    useEffect(()=>{
         let  timer;
         setRety(0);
         if(retrying){
@@ -22,10 +30,10 @@ const Movies = () => {
         return ()=>{clearInterval(timer)}
     },[retrying])
 
-    async function handleFetchMovie(){
+     async function handleFetchMovie(){
         setIsLoading(true);
         try{
-        const response = await fetch("https://swapi.dev/api/film");
+        const response = await fetch("https://swapi.dev/api/films");
         if(!response.ok){
             setRetrying(true);
             throw new Error("Something went wrong.");
@@ -42,10 +50,13 @@ const Movies = () => {
                 }
             })
             setMovies(fetchedMovies);
+            localStorage.setItem('data',JSON.stringify(fetchedMovies));
+            
         }catch(error){
             setError(error.message);
         }
         setIsLoading(false);
+
     }
 
     return <div style={{minHeight:"100vh"}}>
