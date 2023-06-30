@@ -3,6 +3,7 @@ import Content from "../components/Content";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { Button, Container, Form, FormGroup, FormLabel, FormControl, ListGroup, Spinner } from "react-bootstrap";
+import { json } from "react-router-dom";
 
 const Movies = () => {
     const [movies, setMovies] = useState([]);
@@ -12,24 +13,37 @@ const Movies = () => {
     const [retry, setRety] = useState(0);
 
     const handleFetchMovie = useCallback(async () => {
+        // console.log('called handlefetchedmovie');
         setIsLoading(true);
         try{
-        const response = await fetch("https://swapi.dev/api/films");
+        // const response = await fetch("https://swapi.dev/api/films");
+        const response = await fetch("https://react-ecommerce-af4e6-default-rtdb.firebaseio.com/movies.json");
         if(!response.ok){
             setRetrying(true);
             throw new Error("Something went wrong.");
         }else{
             setRetrying(false);
         }
+        const fetchedMovies = [];
         const data = await response.json();
- 
-        const fetchedMovies = data.results.map((movie)=>{
-                return {
-                    title:movie.title,
-                    id:movie.episode_id,
-                    desc:movie.opening_crawl,
+        for(const key in data){
+            fetchedMovies.push(
+                {
+                    id:key,
+                    title:data[key].title,
+                    openingText:data[key].openingText,
+                    // releaseDate:data[key].releaseData,
                 }
-            })
+            )
+        }
+ 
+        // const fetchedMovies = data.results.map((movie)=>{
+        //         return {
+        //             title:movie.title,
+        //             id:movie.episode_id,
+        //             desc:movie.opening_crawl,
+        //         }
+        //     })
             setMovies(fetchedMovies);
             localStorage.setItem('data',JSON.stringify(fetchedMovies));
             
@@ -63,18 +77,43 @@ const Movies = () => {
     function handleAddMovie(event){
         event.preventDefault();
         const title = event.target.movieTitle.value;
-        const desc = event.target.movieDesc.value;
-        setMovies((prev)=>{
-            const updatedMovies =  [...prev, {
-                id: Math.random(),
-                title: title,
-                desc: desc,
-            }];
-            localStorage.setItem('data',JSON.stringify(updatedMovies));
-            return updatedMovies;
+        const openingText = event.target.movieDesc.value;
+        // setMovies((prev)=>{
+        //     const updatedMovies =  [...prev, {
+        //         id: Math.random(),
+        //         title: title,
+        //         openingText: openingText,
+        //     }];
+        //     localStorage.setItem('data',JSON.stringify(updatedMovies));
+        //     return updatedMovies;
+        // })
+        const movie = {
+            title: title,
+            openingText: openingText,
+        }
+        fetch("https://react-ecommerce-af4e6-default-rtdb.firebaseio.com/movies.json",{
+            method: 'POST',
+            body: JSON.stringify(movie),
+            headers: {
+                "Content-Type": 'application/json',
+            }
+        }).then((res)=>{
+            // console.log(res);
+            handleFetchMovie();
         })
+        // console.log(res);
         event.target.movieTitle.value = '';
         event.target.movieDesc.value = '';
+
+    }
+    function handleDeleteMovie(id){
+        // console.log(id);
+        fetch(`https://react-ecommerce-af4e6-default-rtdb.firebaseio.com/movies/${id}.json`,{
+            method:'DELETE',
+        }).then((res)=>{
+            handleFetchMovie();
+            // console.log(res);
+        })
     }
 
     return <div style={{minHeight:"100vh"}}>
@@ -109,7 +148,8 @@ const Movies = () => {
                         return <div key={movie.id}>
                                     <ListGroup.Item className="">
                                     <h3 className="text-center">{movie.title}</h3>
-                                    <p className="">{movie.desc}</p>
+                                    <p className="">{movie.openingText}</p>
+                                    <Button onClick={()=>{handleDeleteMovie(movie.id)}} className="btn btn-danger btn-sm">delete</Button>
                                     </ListGroup.Item>
                                 </div>
                     })
