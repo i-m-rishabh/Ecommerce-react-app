@@ -3,6 +3,7 @@ import App from '../App';
 import Home from '../pages/Home';
 import About from '../pages/About';
 import Movies from '../pages/Movies';
+import Contact from '../pages/Contact';
 
     // router setup
     export const Router = createBrowserRouter([
@@ -11,4 +12,5 @@ import Movies from '../pages/Movies';
         {path: '/home', element: <Home />},
         {path: '/about', element: <About />},
         {path: '/movies', element: <Movies />},
+        {path: '/contact', element: <Contact />}
     ]);

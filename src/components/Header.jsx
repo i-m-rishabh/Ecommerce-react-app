@@ -20,6 +20,7 @@ const Header = ({onCartOpen, cartActive}) => {
             <Nav.Link as={Link} to="/">Store</Nav.Link>
             <Nav.Link as={Link} to="/about">About</Nav.Link>
             <Nav.Link as={Link} to="/movies">Movies</Nav.Link>
+            <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
           </Nav>
           {cartActive && <Button onClick={()=>{onCartOpen()}}>Cart {noOfItems}</Button>}
         </Container>
