@@ -2,6 +2,7 @@ import {Container, Button, Image } from "react-bootstrap";
 import './sectionItem.css';
 import { useContext } from "react";
 import CartContext from "../cartContext/CartContext";
+import { Link } from "react-router-dom";
 
 const SectionItem = ({product}) => {
     const cartCtx = useContext(CartContext);
@@ -9,7 +10,7 @@ const SectionItem = ({product}) => {
         <h3 className="text-center">{product.title}</h3>
         <div className="">
             <Container >
-                <Image src={product.imageUrl} className= "img image-with-hover-effect border" />
+              <Link to={`/products/${product.title}`}>  <Image src={product.imageUrl} className= "img image-with-hover-effect border" /></Link>
             </Container>
         </div>
         <div className="d-flex mt-2 justify-content-between">
