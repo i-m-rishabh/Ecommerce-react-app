@@ -6,6 +6,7 @@ import Movies from '../pages/Movies';
 import Contact from '../pages/Contact';
 import ProductDetails from '../pages/ProductDetails';
 import SignUp from '../Auth/SignUp';
+import Login from '../Auth/Login';
 
     // router setup
     export const Router = createBrowserRouter([
@@ -17,4 +18,5 @@ import SignUp from '../Auth/SignUp';
         {path: '/movies', element: <Movies />},
         {path: '/contact', element: <Contact />},
         {path: '/signup', element: <SignUp/>},
+        {path: '/login', element: <Login/>},
     ]);
