@@ -1,8 +1,11 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Button, ButtonGroup, Container, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
+import { UserContext } from "./userContext/UserContext";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const userCtx = useContext(UserContext);
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const [errorMsg, setErrorMsg] = useState("");
@@ -35,7 +38,8 @@ const Login = () => {
             if(res.ok){
                 console.log("response is ok");
                 res.json().then(data=>{
-                    console.log(data.idToken);
+                    userCtx.userLoggedIn(data.email, data.idToken);
+                    navigate('/home');
                 })
             }else{
                 console.log('response not OK');

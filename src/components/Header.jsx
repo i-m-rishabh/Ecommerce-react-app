@@ -2,14 +2,22 @@ import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import {BiStore} from 'react-icons/bi'
 import CartContext from '../cartContext/CartContext';
+import { UserContext } from '../Auth/userContext/UserContext';
 
 const Header = ({onCartOpen, cartActive}) => {
     const cartCtx = useContext(CartContext);
     const noOfItems = cartCtx.noOfCartItems()
+    const userCtx = useContext(UserContext);
+    const navigate = useNavigate();
+
+    function handleLogout(){
+      userCtx.userLoggedOut();
+      navigate('/login');
+    }
 
     return <>
         <Navbar bg="dark" data-bs-theme="dark" className='position-fixed w-100 z-1'>
@@ -23,6 +31,7 @@ const Header = ({onCartOpen, cartActive}) => {
             <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
           </Nav>
           {cartActive && <Button onClick={()=>{onCartOpen()}}>Cart {noOfItems}</Button>}
+          <Button className='btn btn-sm btn-danger ms-5' onClick={handleLogout}>Logout</Button>
         </Container>
       </Navbar>
     </>
