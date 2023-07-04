@@ -1,7 +1,8 @@
 import { useContext, useRef, useState } from "react";
 import { Button, ButtonGroup, Container, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./userContext/UserContext";
+import CartContext from "../cartContext/CartContext";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -10,6 +11,8 @@ const Login = () => {
     const passwordRef = useRef(null);
     const [errorMsg, setErrorMsg] = useState("");
     const [isSendingRequest, setSendingRequest] = useState(false);
+    const cartCtx = useContext(CartContext);
+    
 
     function loginHandler(event){
         event.preventDefault();
@@ -38,7 +41,26 @@ const Login = () => {
             if(res.ok){
                 console.log("response is ok");
                 res.json().then(data=>{
-                    userCtx.userLoggedIn(data.email, data.idToken);
+                    console.log(data);
+                    userCtx.userLoggedIn(data.email, data.idToken, data.localId);
+                    fetch(`https://react-ecommerce-af4e6-default-rtdb.firebaseio.com/users/${userCtx.localId}.json`).then(res=>{
+                        if(res.ok){
+                            let userCart;
+                            console.log("user cart fetched successfully");
+                            res.json().then(data=>{
+                                for(let key in data){
+                                    userCart = data[key].cart;
+                                }
+                                console.log(userCart);
+                                if(userCart===undefined){
+                                    userCart = [];
+                                }
+                                cartCtx.setCart(userCart);
+                            })
+                        }else{
+
+                        }
+                    }).catch(err=>{console.log(err)});
                     navigate('/home');
                 })
             }else{

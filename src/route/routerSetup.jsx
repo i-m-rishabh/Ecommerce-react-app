@@ -12,7 +12,7 @@ import UpdatePassword from '../Auth/UpdatePassword';
     // router setup
     export const Router = createBrowserRouter([
         // {path: '/', element: <App />},
-        {path: '/', element: <App />},
+        {path: '/', element: <Login />},
         {path: '/products/:productTitle', element: <ProductDetails/>},
         {path: '/home', element: <Home />},
         {path: '/about', element: <About />},

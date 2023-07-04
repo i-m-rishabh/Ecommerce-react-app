@@ -1,8 +1,29 @@
+import { UserContext } from "../Auth/userContext/UserContext";
 import CartContext from "./CartContext";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const CartContextProvider = (props) => {
+    const userCtx = useContext(UserContext);
     const [cartITEMS, setCartITEMS] = useState([]);
+    // const localId = userCtx.localId;
+    useEffect(()=>{
+        fetch(`https://react-ecommerce-af4e6-default-rtdb.firebaseio.com/users/${userCtx.localId}.json`,{
+            method: "POST",
+            body: JSON.stringify({cart:cartITEMS}),
+            headers:{
+                'Content-Type':'application/json',
+            }
+        }).then(res=>{
+            if(res.ok){
+                console.log("cart database updated");
+            }else{
+                console.log("error in updating cart database");
+            }
+        }).catch(err=>{console.log(err)})
+    },[cartITEMS])
+
+    
+
     const ctxValue = {
         cartItems: cartITEMS,
         noOfCartItems: function(){return this.cartItems.length},
@@ -12,6 +33,11 @@ const CartContextProvider = (props) => {
             total += parseInt(item.price)*item.quantity;
           })
           return total;
+        },
+        setCart: (cart)=>{
+            if(cart){
+                setCartITEMS(cart);
+            }
         },
         addToCart: (item)=>{
             setCartITEMS((prev)=>{

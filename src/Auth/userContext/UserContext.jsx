@@ -4,6 +4,7 @@ export const UserContext = createContext({
     name:'',
     email:'',
     idToken:'',
+    localId:'',
     isLoggedIn:'',
     userLoggedOut:()=>{
 

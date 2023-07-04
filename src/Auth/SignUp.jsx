@@ -10,6 +10,29 @@ const SignUp = () => {
     const [successMsg, setSuccessMsg] = useState("");
     const [isSendingRequest, setSendingRequest] = useState(false);
 
+    function createUserCart(localID, email){
+        // const encodedEmail = encodeURIComponent(email);
+        const userData = {
+            email:email,
+            cart:[null]
+        }
+        fetch(`https://react-ecommerce-af4e6-default-rtdb.firebaseio.com/users/${localID}.json`,{
+            method: "POST",
+            body: JSON.stringify(userData),
+            headers:{
+                'Content-Type':'application/json',
+            }
+        }).then(res=>{
+            if(res.ok){
+                console.log("cart created successfully");
+            }else{
+                console.log("error creating cart");
+                console.log(res);
+            }
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
     function signupHandler(event){
         event.preventDefault();
         setSendingRequest(true);
@@ -38,7 +61,8 @@ const SignUp = () => {
             if(res.ok){
                 setSuccessMsg("Congratulations! You have successfully signed up.")                
                 res.json().then(data=>{
-                    // console.log(data);
+                    console.log(data);
+                    createUserCart(data.localId, data.email);
                 })
             }else{
                 console.log('response not OK');
