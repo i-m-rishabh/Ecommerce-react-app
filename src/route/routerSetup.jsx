@@ -7,6 +7,7 @@ import Contact from '../pages/Contact';
 import ProductDetails from '../pages/ProductDetails';
 import SignUp from '../Auth/SignUp';
 import Login from '../Auth/Login';
+import UpdatePassword from '../Auth/UpdatePassword';
 
     // router setup
     export const Router = createBrowserRouter([
@@ -19,4 +20,5 @@ import Login from '../Auth/Login';
         {path: '/contact', element: <Contact />},
         {path: '/signup', element: <SignUp/>},
         {path: '/login', element: <Login/>},
+        {path: '/update-password', element: <UpdatePassword/>},
     ]);

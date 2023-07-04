@@ -44,7 +44,7 @@ const Login = () => {
             }else{
                 console.log('response not OK');
                 res.json().then(data=>{
-                    console.log(data.error.message);
+                    // console.log(data.error.message);
                     setErrorMsg(data.error.message);
                 })
             }

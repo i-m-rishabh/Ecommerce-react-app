@@ -5,10 +5,22 @@ import Header from "../components/Header";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import { ListGroup } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+    const navigate = useNavigate();
     return <>
         <Header onCartOpen={()=>{}} cartActive={false}/>
+        <Button className="btn btn-danger position-fixed z-3" style={{
+            top:"60px",
+            right:"30px",
+            // fontSize:"13px",
+        }}
+        onClick={()=>{
+            navigate('/update-password');
+        }}
+        >change password</Button>
+
         <Content />
         <div className=" bg-secondary vw-100 d-flex flex-column justify-content-center align-items-center">
             <h2 className="p-2 m-2 text-white">Get Our Latest Album</h2>
