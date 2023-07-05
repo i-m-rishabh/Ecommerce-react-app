@@ -79,9 +79,9 @@ const SignUp = () => {
         setSendingRequest(false);
     }
     return(
-        <Container className="d-flex flex-column align-items-center my-3">
-            <h2 className="m-3">SignUp</h2>
-            <Form onSubmit={signupHandler}>
+        <Container className="d-flex flex-column align-items-center mt-5">
+            <Form onSubmit={signupHandler} className="shadow p-5 mt-5">
+            <h2 className="mb-3 text-center">SignUp</h2>
                 <FormGroup>
                     <FormLabel>Your Email</FormLabel>
                     <FormControl type="email" ref={emailRef} onChange={handleFormInputChange}/>

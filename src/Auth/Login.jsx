@@ -103,9 +103,9 @@ const Login = () => {
         setSendingRequest(false);
     }
     return(
-        <Container className="d-flex flex-column align-items-center my-3">
-            <h2 className="m-3">Login</h2>
-            <Form onSubmit={loginHandler}>
+        <Container className="d-flex flex-column  align-items-center mt-5">
+            <Form onSubmit={loginHandler} className="shadow p-5 mt-5">
+            <h2 className="mb-3 text-center">Login</h2>
                 <FormGroup>
                     <FormLabel>Your Email</FormLabel>
                     <FormControl type="email" ref={emailRef} onChange={handleFormInputChange}/>
