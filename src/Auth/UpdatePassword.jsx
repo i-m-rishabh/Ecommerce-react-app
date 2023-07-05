@@ -2,8 +2,10 @@ import { Button, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap
 import Header from "../components/Header";
 import { useContext, useRef, useState } from "react";
 import { UserContext } from "./userContext/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const UpdatePassword = () => {
+    const navigate = useNavigate();
     const newPasswordRef = useRef(null);
     const [sendingRequest, setSendingRequest] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
@@ -29,6 +31,7 @@ const UpdatePassword = () => {
                 res.json().then(data=>{
                     console.log("response is OK");
                     alert("password updated");
+                    navigate('/home');
                     // console.log(data);
                 })
             }else{

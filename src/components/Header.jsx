@@ -9,9 +9,10 @@ import CartContext from '../cartContext/CartContext';
 import { UserContext } from '../Auth/userContext/UserContext';
 
 const Header = ({onCartOpen, cartActive}) => {
+    const userCtx = useContext(UserContext);
+    
     const cartCtx = useContext(CartContext);
     const noOfItems = cartCtx.noOfCartItems()
-    const userCtx = useContext(UserContext);
     const navigate = useNavigate();
 
     function handleLogout(){
@@ -25,7 +26,7 @@ const Header = ({onCartOpen, cartActive}) => {
           <Navbar.Brand href="#home"><BiStore className='display-5'/></Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/home">Home</Nav.Link>
-            <Nav.Link as={Link} to="/">Store</Nav.Link>
+            <Nav.Link as={Link} to="/store">Store</Nav.Link>
             <Nav.Link as={Link} to="/about">About</Nav.Link>
             <Nav.Link as={Link} to="/movies">Movies</Nav.Link>
             <Nav.Link as={Link} to="/contact">Contact</Nav.Link>

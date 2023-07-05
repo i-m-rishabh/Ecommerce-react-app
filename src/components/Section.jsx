@@ -5,7 +5,7 @@ const Section = () => {
         <h2 className='text-center'>Music</h2>
         {
             productsArr.map((product)=>{
-               return <SectionItem product={product}/>
+               return <SectionItem product={product} key={product.title}/>
             })
         }
     </div>

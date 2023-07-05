@@ -20,7 +20,7 @@ const CartContextProvider = (props) => {
                 console.log("error in updating cart database");
             }
         }).catch(err=>{console.log(err)})
-    },[cartITEMS])
+    },[cartITEMS,userCtx.localId])
 
     
 
@@ -77,7 +77,7 @@ const CartContextProvider = (props) => {
             })
             setCartITEMS((prev)=>{
                 return prev.filter((ITEM)=>{
-                    return ITEM.quantity!=0;
+                    return ITEM.quantity!==0;
                 })
             })
         }

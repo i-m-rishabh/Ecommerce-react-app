@@ -43,6 +43,13 @@ const Login = () => {
                 res.json().then(data=>{
                     console.log(data);
                     userCtx.userLoggedIn(data.email, data.idToken, data.localId);
+                    localStorage.setItem("userData",JSON.stringify({
+                        name:'',
+                        email:data.email,
+                        localId:data.localId,
+                        idToken:data.idToken,
+                        isLoggedIn:true,
+                    }));
                     fetch(`https://react-ecommerce-af4e6-default-rtdb.firebaseio.com/users/${userCtx.localId}.json`).then(res=>{
                         if(res.ok){
                             let userCart;
