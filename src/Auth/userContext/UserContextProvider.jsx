@@ -57,6 +57,7 @@ const UserContextProvider = (props) => {
 
             userLoggedOut:function (){
                 localStorage.removeItem("userData");
+                localStorage.removeItem("cart");
                 this.name = '';
                 this.email= '';
                 this.idToken= '';

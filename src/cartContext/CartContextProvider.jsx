@@ -4,7 +4,9 @@ import { useContext, useEffect, useState } from "react";
 
 const CartContextProvider = (props) => {
     const userCtx = useContext(UserContext);
-    const [cartITEMS, setCartITEMS] = useState([]);
+    const cart = JSON.parse(localStorage.getItem("cart"));
+
+    const [cartITEMS, setCartITEMS] = useState(cart || []);
     // const localId = userCtx.localId;
     useEffect(()=>{
         fetch(`https://react-ecommerce-af4e6-default-rtdb.firebaseio.com/users/${userCtx.localId}.json`,{

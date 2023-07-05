@@ -76,10 +76,11 @@ const Login = () => {
                                 for(let key in data){
                                     userCart = data[key].cart;
                                 }
-                                console.log(userCart);
+                                // console.log(userCart);
                                 if(userCart===undefined){
                                     userCart = [];
                                 }
+                                localStorage.setItem("cart",JSON.stringify(userCart));
                                 cartCtx.setCart(userCart);
                             })
                         }else{
