@@ -13,6 +13,19 @@ const Login = () => {
     const [isSendingRequest, setSendingRequest] = useState(false);
     const cartCtx = useContext(CartContext);
     
+    console.log("login page revaluated");
+    function setAutoLogout(time){
+        const currentTime = new Date().getTime();
+        const expireTime = time;
+        const remainingTime = expireTime - currentTime;
+        setTimeout(()=>{
+            if(userCtx.isLoggedIn){
+                alert("session expired need to login again");
+                localStorage.removeItem("expireTime");
+                userCtx.userLoggedOut();
+            }
+        },remainingTime)
+    }
 
     function loginHandler(event){
         event.preventDefault();
@@ -39,7 +52,12 @@ const Login = () => {
         ).then(res=>{
             setSendingRequest(false);
             if(res.ok){
-                console.log("response is ok");
+                console.log("user logged in successfully");
+                //adding session time for auto logout
+                const expireTime = new Date().getTime() + 1000*60*5;
+                setAutoLogout(expireTime);
+                localStorage.setItem("expireTime",expireTime.toString()); 
+
                 res.json().then(data=>{
                     console.log(data);
                     userCtx.userLoggedIn(data.email, data.idToken, data.localId);
