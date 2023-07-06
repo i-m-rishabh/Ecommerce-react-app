@@ -7,7 +7,6 @@ const CartContextProvider = (props) => {
     const cart = JSON.parse(localStorage.getItem("cart"));
 
     const [cartITEMS, setCartITEMS] = useState(cart || []);
-    // const localId = userCtx.localId;
     useEffect(()=>{
         fetch(`https://react-ecommerce-af4e6-default-rtdb.firebaseio.com/users/${userCtx.localId}.json`,{
             method: "POST",
@@ -17,6 +16,7 @@ const CartContextProvider = (props) => {
             }
         }).then(res=>{
             if(res.ok){
+                localStorage.setItem("cart",JSON.stringify(cartITEMS));
                 console.log("cart database updated");
             }else{
                 console.log("error in updating cart database");

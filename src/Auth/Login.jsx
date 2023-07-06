@@ -54,7 +54,7 @@ const Login = () => {
             if(res.ok){
                 console.log("user logged in successfully");
                 //adding session time for auto logout
-                const expireTime = new Date().getTime() + 1000*60*5;
+                const expireTime = new Date().getTime() + 1000*60*60;
                 setAutoLogout(expireTime);
                 localStorage.setItem("expireTime",expireTime.toString()); 
 
